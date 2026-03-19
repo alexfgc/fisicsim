@@ -59,8 +59,8 @@
 
   <!-- SCRIPT 2: generación del catálogo -->
   <script>
-    const asignaturas = [...new Set(SIMULACIONES.map(s => s.asignatura))];
-    const contenedor  = document.getElementById("catalogo-contenido");
+    var asignaturas = [...new Set(SIMULACIONES.map(s => s.asignatura))];
+    const contenedor = document.getElementById("catalogo-contenido");
 
     asignaturas.forEach(asignatura => {
       const simsDeEstaAsignatura = SIMULACIONES.filter(
@@ -69,7 +69,7 @@
 
       const seccion = document.createElement("section");
       seccion.className = "catalogo-seccion";
-      seccion.id = asignatura; // ← permite el scroll desde la portada
+      seccion.id = asignatura;
 
       seccion.innerHTML = `
         <h2 class="seccion-titulo">${asignatura}</h2>
