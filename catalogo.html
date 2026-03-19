@@ -17,8 +17,21 @@
 
   <link rel="stylesheet" href="style.css" />
 </head>
-
 <body>
+
+  <!-- OVERLAY: fondo oscuro en móvil al abrir la barra -->
+  <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+  <!-- BARRA LATERAL -->
+  <aside class="sidebar" id="sidebar">
+    <p class="sidebar-titulo">Asignaturas</p>
+    <div id="sidebar-links"></div>
+  </aside>
+
+  <!-- BOTÓN PARA ABRIR/CERRAR -->
+  <button class="sidebar-toggle" id="sidebar-toggle" aria-label="Abrir navegación">
+    <span>Áreas</span>
+  </button>
 
   <!-- CABECERA: idéntica a index.html -->
   <header class="site-header">
@@ -27,49 +40,9 @@
       <a href="index.html">Inicio</a>
       <a href="catalogo.html">Catálogo</a>
     </nav>
-
-    <!-- OVERLAY: fondo oscuro en móvil al abrir la barra -->
-<div class="sidebar-overlay" id="sidebar-overlay"></div>
-
-<!-- BARRA LATERAL -->
-<aside class="sidebar" id="sidebar">
-  <p class="sidebar-titulo">Asignaturas</p>
-  <!-- Los enlaces se generan automáticamente desde el JS -->
-  <div id="sidebar-links"></div>
-</aside>
-
-<!-- BOTÓN PARA ABRIR/CERRAR -->
-<button class="sidebar-toggle" id="sidebar-toggle" aria-label="Abrir navegación">
-  <span>Áreas</span>
-</button>
   </header>
 
   <main class="catalogo-main">
-    <div class="catalogo-header">
-      <h1>Catálogo de simulaciones</h1>
-      <p>Selecciona una simulación para visualizarla e interactuar con ella.</p>
-    </div>
-
-    <!-- 
-      Aquí se van a generar los grupos de asignaturas
-      con sus tarjetas. El JavaScript de abajo los
-      construye automáticamente leyendo SIMULACIONES.
-    -->
-    <div id="catalogo-contenido"></div>
-  </main>
-
-  <footer class="site-footer">
-    <p>FISICSIM · Grado en Física · UCLM</p>
-  </footer>
-
-  <!-- Cargamos el array central primero -->
-  <script src="simulaciones.js"></script>
-
-  <script>
-    // ─────────────────────────────────────────
-    // GENERACIÓN AUTOMÁTICA DEL CATÁLOGO
-    // ─────────────────────────────────────────
-
     // 1. Extraemos todas las asignaturas únicas
     //    que aparecen en el array, en orden de
     //    aparición.
