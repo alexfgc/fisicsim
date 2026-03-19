@@ -557,3 +557,135 @@ input[type="range"] {
     grid-template-columns: 1fr;
   }
 }
+
+
+
+/* ─────────────────────────────────────────
+   BARRA LATERAL DE NAVEGACIÓN
+───────────────────────────────────────── */
+
+/* Botón para abrir/cerrar la barra */
+.sidebar-toggle {
+  position: fixed;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  background-color: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: 0 var(--radius) var(--radius) 0;
+  padding: 0.7rem 0.5rem;
+  cursor: pointer;
+  z-index: 200;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+  transition: left 0.3s ease, opacity 0.2s;
+  font-family: var(--font);
+}
+
+.sidebar-toggle:hover {
+  opacity: 0.85;
+}
+
+/* Texto vertical dentro del botón */
+.sidebar-toggle span {
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+}
+
+/* La barra lateral en sí */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: -260px; /* oculta fuera de pantalla por defecto */
+  width: 240px;
+  height: 100vh;
+  background-color: var(--surface);
+  border-right: 1px solid var(--border);
+  z-index: 150;
+  padding: 5rem 1.5rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  transition: left 0.3s ease;
+  overflow-y: auto;
+}
+
+/* Cuando la barra está abierta */
+.sidebar.abierta {
+  left: 0;
+}
+
+/* El botón se desplaza junto con la barra */
+.sidebar-toggle.desplazado {
+  left: 240px;
+}
+
+/* Título de la barra */
+.sidebar-titulo {
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+  margin-bottom: 0.8rem;
+  padding-bottom: 0.6rem;
+  border-bottom: 1px solid var(--border);
+}
+
+/* Cada enlace de asignatura */
+.sidebar-link {
+  display: block;
+  padding: 0.55rem 0.8rem;
+  border-radius: calc(var(--radius) - 2px);
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  transition: background-color 0.15s, color 0.15s;
+  cursor: pointer;
+  border: none;
+  background: none;
+  text-align: left;
+  font-family: var(--font);
+  width: 100%;
+}
+
+.sidebar-link:hover {
+  background-color: var(--bg);
+  color: var(--text);
+  text-decoration: none;
+}
+
+.sidebar-link.activo {
+  color: var(--accent);
+  background-color: var(--bg);
+}
+
+/* Fondo oscuro semitransparente al abrir en móvil */
+.sidebar-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 140;
+}
+
+.sidebar-overlay.visible {
+  display: block;
+}
+
+@media (max-width: 600px) {
+  .sidebar {
+    width: 220px;
+    left: -220px;
+  }
+
+  .sidebar-toggle.desplazado {
+    left: 220px;
+  }
+}

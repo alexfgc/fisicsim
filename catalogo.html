@@ -27,6 +27,21 @@
       <a href="index.html">Inicio</a>
       <a href="catalogo.html">Catálogo</a>
     </nav>
+
+    <!-- OVERLAY: fondo oscuro en móvil al abrir la barra -->
+<div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+<!-- BARRA LATERAL -->
+<aside class="sidebar" id="sidebar">
+  <p class="sidebar-titulo">Asignaturas</p>
+  <!-- Los enlaces se generan automáticamente desde el JS -->
+  <div id="sidebar-links"></div>
+</aside>
+
+<!-- BOTÓN PARA ABRIR/CERRAR -->
+<button class="sidebar-toggle" id="sidebar-toggle" aria-label="Abrir navegación">
+  <span>Áreas</span>
+</button>
   </header>
 
   <main class="catalogo-main">
@@ -98,6 +113,76 @@
       contenedor.appendChild(seccion);
     });
   </script>
+ <script>
+  // ─────────────────────────────────────────
+  // BARRA LATERAL
+  // ─────────────────────────────────────────
 
+  const sidebar        = document.getElementById("sidebar");
+  const toggleBtn      = document.getElementById("sidebar-toggle");
+  const overlay        = document.getElementById("sidebar-overlay");
+  const sidebarLinks   = document.getElementById("sidebar-links");
+
+  // 1. Generamos un enlace por cada asignatura.
+  //    Al clicar, hace scroll hasta esa sección.
+  asignaturas.forEach(asignatura => {
+
+    const btn = document.createElement("button");
+    btn.className = "sidebar-link";
+    btn.textContent = asignatura;
+
+    btn.addEventListener("click", () => {
+      // Buscamos el h2 que contiene el nombre
+      // de la asignatura y hacemos scroll hasta él.
+      const secciones = document.querySelectorAll(".seccion-titulo");
+      secciones.forEach(titulo => {
+        if (titulo.textContent === asignatura) {
+          titulo.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+      });
+
+      // En móvil cerramos la barra al navegar.
+      if (window.innerWidth < 768) cerrarSidebar();
+    });
+
+    sidebarLinks.appendChild(btn);
+  });
+
+  // 2. Lógica de abrir y cerrar.
+  function abrirSidebar() {
+    sidebar.classList.add("abierta");
+    toggleBtn.classList.add("desplazado");
+    overlay.classList.add("visible");
+  }
+
+  function cerrarSidebar() {
+    sidebar.classList.remove("abierta");
+    toggleBtn.classList.remove("desplazado");
+    overlay.classList.remove("visible");
+  }
+
+  toggleBtn.addEventListener("click", () => {
+    sidebar.classList.contains("abierta") ? cerrarSidebar() : abrirSidebar();
+  });
+
+  // Cerrar al clicar el fondo oscuro (móvil).
+  overlay.addEventListener("click", cerrarSidebar);
+
+  // 3. Resaltamos la asignatura visible
+  //    mientras el usuario hace scroll.
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const nombre = entry.target.textContent;
+        document.querySelectorAll(".sidebar-link").forEach(link => {
+          link.classList.toggle("activo", link.textContent === nombre);
+        });
+      }
+    });
+  }, { threshold: 0.8 });
+
+  // Observamos todos los títulos de sección.
+  document.querySelectorAll(".seccion-titulo").forEach(el => observer.observe(el));
+</script>
 </body>
 </html>
