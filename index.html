@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FISICSIM</title>
+
+  <!-- Fuente tipográfica de Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <!-- KaTeX: para renderizar fórmulas matemáticas -->
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"
+  />
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+
+  <!-- Nuestro CSS global (lo rellenamos en la Fase 2) -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <!-- CABECERA -->
+  <header class="site-header">
+    <span class="logo">FISICSIM</span>
+    <nav>
+      <a href="index.html">Inicio</a>
+      <a href="catalogo.html">Catálogo</a>
+    </nav>
+  </header>
+
+  <!-- SECCIÓN HERO: lo primero que ve el usuario -->
+  <main class="hero">
+    <h1 class="hero-title">FISICSIM</h1>
+    <p class="hero-sub">
+      Repositorio interactivo de simulaciones de física para el Grado en Física.
+      Visualiza, experimenta e intuye los fenómenos antes de calcularlos.
+    </p>
+
+    <!-- Una fórmula de ejemplo renderizada con KaTeX -->
+    <p class="hero-formula">
+      Todo empieza con \( F = ma \) — y se complica a partir de aquí.
+    </p>
+
+    <a href="catalogo.html" class="btn-primary">Explorar simulaciones →</a>
+  </main>
+
+  <!-- SECCIÓN DE ASIGNATURAS: vista rápida de categorías -->
+  <section class="categories">
+    <h2>Áreas temáticas</h2>
+    <div class="category-grid">
+      <div class="category-card">Mecánica Clásica</div>
+      <div class="category-card">Mecánica y Ondas</div>
+      <div class="category-card">Termodinámica</div>
+      <div class="category-card">Física Cuántica</div>
+      <div class="category-card">Electromagnetismo</div>
+      <div class="category-card">Métodos Matemáticos</div>
+    </div>
+  </section>
+
+  <!-- PIE DE PÁGINA -->
+  <footer class="site-footer">
+    <p>FISICSIM · Grado en Física · UCLM</p>
+  </footer>
+
+  <!-- Script que activa el renderizado automático de KaTeX -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      renderMathInElement(document.body, {
+        delimiters: [
+          { left: "$$", right: "$$", display: true },  // bloque centrado
+          { left: "\\(", right: "\\)", display: false } // inline
+        ]
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Péndulo Simple — FISICSIM</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <!-- KaTeX para las fórmulas de la explicación física -->
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"
+  />
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+
+  <!-- p5.js: el motor de la simulación -->
+  <script src="https://cdn.jsdelivr.net/npm/p5@1.9.3/lib/p5.min.js"></script>
+
+  <!--
+    Rutas relativas: esta página está en sims/pendulo/,
+    así que para llegar al CSS raíz hay que subir dos niveles.
+  -->
+  <link rel="stylesheet" href="../../style.css" />
+</head>
+
+<body>
+
+  <!-- CABECERA -->
+  <header class="site-header">
+    <a href="../../index.html" class="logo">FISICSIM</a>
+    <nav>
+      <a href="../../index.html">Inicio</a>
+      <a href="../../catalogo.html">Catálogo</a>
+    </nav>
+  </header>
+
+  <main class="sim-main">
+
+    <!-- TÍTULO Y METADATOS -->
+    <div class="sim-header">
+      <a href="../../catalogo.html" class="btn-back">← Volver al catálogo</a>
+      <div class="sim-meta">
+        <span class="sim-asignatura">Mecánica Clásica</span>
+      </div>
+      <h1 class="sim-titulo">Péndulo Simple</h1>
+      <p class="sim-descripcion">
+        Oscilación de un péndulo bajo gravedad. Explora cómo el periodo
+        depende de la longitud y el ángulo inicial, y visualiza el
+        intercambio entre energía cinética y potencial.
+      </p>
+    </div>
+
+    <!-- ZONA CENTRAL: canvas + controles -->
+    <div class="sim-workspace">
+
+      <!-- 
+        p5.js inyecta el canvas aquí automáticamente.
+        El id debe coincidir con lo que indiquemos en sketch.js.
+      -->
+      <div id="canvas-container" class="canvas-container">
+        <p class="canvas-placeholder">Cargando simulación…</p>
+      </div>
+
+      <!-- PANEL DE CONTROLES -->
+      <div class="controles-panel">
+        <h2 class="controles-titulo">Parámetros</h2>
+
+        <!-- Control: longitud del péndulo -->
+        <div class="control-grupo">
+          <label for="slider-longitud">
+            Longitud <span class="control-valor" id="val-longitud">1.0</span> m
+          </label>
+          <input
+            type="range"
+            id="slider-longitud"
+            min="0.5" max="3.0" step="0.1" value="1.0"
+          />
+        </div>
+
+        <!-- Control: ángulo inicial -->
+        <div class="control-grupo">
+          <label for="slider-angulo">
+            Ángulo inicial <span class="control-valor" id="val-angulo">30</span>°
+          </label>
+          <input
+            type="range"
+            id="slider-angulo"
+            min="5" max="80" step="1" value="30"
+          />
+        </div>
+
+        <!-- Control: gravedad -->
+        <div class="control-grupo">
+          <label for="slider-gravedad">
+            Gravedad <span class="control-valor" id="val-gravedad">9.8</span> m/s²
+          </label>
+          <input
+            type="range"
+            id="slider-gravedad"
+            min="1.0" max="20.0" step="0.1" value="9.8"
+          />
+        </div>
+
+        <!-- Botones -->
+        <div class="controles-botones">
+          <button id="btn-reiniciar" class="btn-control">Reiniciar</button>
+          <button id="btn-pausa" class="btn-control btn-control-acento">Pausar</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- EXPLICACIÓN FÍSICA -->
+    <div class="sim-explicacion">
+      <h2>Modelo físico</h2>
+
+      <p>
+        Un péndulo simple consiste en una masa puntual suspendida de un hilo
+        inextensible de longitud \( L \). Cuando se desplaza un ángulo \( \theta \)
+        de la vertical, la componente tangencial de la gravedad genera una
+        fuerza restauradora.
+      </p>
+
+      <p>
+        La ecuación de movimiento exacta es:
+      </p>
+
+      <p class="formula-bloque">
+        $$ \ddot{\theta} = -\frac{g}{L} \sin\theta $$
+      </p>
+
+      <p>
+        Para ángulos pequeños (\( \theta \lesssim 15° \)), se puede aproximar
+        \( \sin\theta \approx \theta \), lo que convierte la ecuación en un
+        oscilador armónico simple con periodo:
+      </p>
+
+      <p class="formula-bloque">
+        $$ T = 2\pi\sqrt{\frac{L}{g}} $$
+      </p>
+
+      <p>
+        Nota que el periodo <strong>no depende de la masa</strong> ni, en la
+        aproximación de ángulo pequeño, del ángulo inicial. Esta simulación
+        usa la ecuación exacta, por lo que podrás observar cómo para ángulos
+        grandes el periodo se aleja del valor teórico \( T = 2\pi\sqrt{L/g} \).
+      </p>
+    </div>
+
+  </main>
+
+  <footer class="site-footer">
+    <p>FISICSIM · Grado en Física · UCLM</p>
+  </footer>
+
+  <!-- 
+    sketch.js se carga al final para que el DOM
+    (el canvas-container) ya exista cuando p5 lo busque.
+  -->
+  <script src="sketch.js"></script>
+
+  <!-- Activa KaTeX en toda la página -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      renderMathInElement(document.body, {
+        delimiters: [
+          { left: "$$", right: "$$", display: true },
+          { left: "\\(", right: "\\)", display: false }
+        ]
+      });
+    });
+  </script>
+
+</body>
+</html>

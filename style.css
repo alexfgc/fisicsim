@@ -1,0 +1,559 @@
+/* ─────────────────────────────────────────
+   VARIABLES GLOBALES
+   Define toda la paleta en un solo sitio.
+   Si quieres cambiar un color, lo cambias
+   aquí y afecta a toda la web.
+───────────────────────────────────────── */
+:root {
+  --bg:         #0f1117;
+  --surface:    #1a1d27;
+  --accent:     #5b8dee;
+  --text:       #e8eaf0;
+  --text-muted: #8b8fa8;
+  --border:     #2a2d3e;
+
+  --font: 'Inter', sans-serif;
+  --radius: 10px;
+}
+
+/* ─────────────────────────────────────────
+   RESET Y BASE
+   Elimina márgenes y paddings por defecto
+   del navegador, y establece el fondo/fuente
+   globales.
+───────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+  font-size: 16px;
+  line-height: 1.6;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* ─────────────────────────────────────────
+   CABECERA (header)
+   Barra fija en la parte superior con el
+   logo a la izquierda y la nav a la derecha.
+───────────────────────────────────────── */
+.site-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background-color: var(--surface);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.logo {
+  font-size: 1.2rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+}
+
+.site-header nav {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.site-header nav a {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  transition: color 0.2s;
+}
+
+.site-header nav a:hover {
+  color: var(--text);
+  text-decoration: none;
+}
+
+/* ─────────────────────────────────────────
+   SECCIÓN HERO
+   El bloque central de la portada.
+   Centrado vertical y horizontalmente.
+───────────────────────────────────────── */
+.hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 6rem 2rem 4rem;
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.hero-title {
+  font-size: clamp(2.5rem, 6vw, 4rem);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--text);
+  margin-bottom: 1.2rem;
+}
+
+.hero-sub {
+  font-size: 1.1rem;
+  color: var(--text-muted);
+  max-width: 560px;
+  margin-bottom: 1.5rem;
+}
+
+.hero-formula {
+  font-size: 1rem;
+  color: var(--text-muted);
+  font-style: italic;
+  margin-bottom: 2.5rem;
+}
+
+/* ─────────────────────────────────────────
+   BOTÓN PRINCIPAL
+───────────────────────────────────────── */
+.btn-primary {
+  display: inline-block;
+  background-color: var(--accent);
+  color: #fff;
+  padding: 0.75rem 2rem;
+  border-radius: var(--radius);
+  font-weight: 600;
+  font-size: 1rem;
+  transition: opacity 0.2s, transform 0.2s;
+}
+
+.btn-primary:hover {
+  opacity: 0.85;
+  transform: translateY(-2px);
+  text-decoration: none;
+}
+
+/* ─────────────────────────────────────────
+   SECCIÓN DE CATEGORÍAS
+   Grid de 3x2 con las asignaturas.
+───────────────────────────────────────── */
+.categories {
+  padding: 3rem 2rem 4rem;
+  max-width: 900px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.categories h2 {
+  text-align: center;
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  margin-bottom: 2rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+}
+
+.category-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+.category-card {
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.2rem 1rem;
+  text-align: center;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  transition: border-color 0.2s, color 0.2s;
+  cursor: default;
+}
+
+.category-card:hover {
+  border-color: var(--accent);
+  color: var(--text);
+}
+
+/* ─────────────────────────────────────────
+   PIE DE PÁGINA
+───────────────────────────────────────── */
+.site-footer {
+  margin-top: auto;
+  padding: 1.5rem 2rem;
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  border-top: 1px solid var(--border);
+}
+
+/* ─────────────────────────────────────────
+   RESPONSIVE — MÓVIL
+   Por debajo de 600px el grid pasa a
+   una sola columna.
+───────────────────────────────────────── */
+@media (max-width: 600px) {
+  .category-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .hero {
+    padding: 4rem 1.5rem 3rem;
+  }
+
+  .site-header {
+    padding: 1rem 1.2rem;
+  }
+}
+
+
+
+
+/* ─────────────────────────────────────────
+   CATÁLOGO
+───────────────────────────────────────── */
+.catalogo-main {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 3rem 2rem 4rem;
+  width: 100%;
+}
+
+.catalogo-header {
+  margin-bottom: 3rem;
+}
+
+.catalogo-header h1 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.catalogo-header p {
+  color: var(--text-muted);
+  font-size: 1rem;
+}
+
+.catalogo-seccion {
+  margin-bottom: 3rem;
+}
+
+.seccion-titulo {
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--accent);
+  margin-bottom: 1.2rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border);
+}
+
+/* Grid de tarjetas: 3 columnas en escritorio */
+.sims-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.2rem;
+}
+
+/* Tarjeta individual */
+.sim-card {
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  color: var(--text);
+  transition: border-color 0.2s, transform 0.2s;
+  display: flex;
+  flex-direction: column;
+}
+
+.sim-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-3px);
+  text-decoration: none;
+}
+
+/* Zona de preview (placeholder hasta que haya simulación) */
+.sim-card-preview {
+  height: 130px;
+  background-color: var(--bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px solid var(--border);
+}
+
+.sim-preview-icon {
+  font-size: 2rem;
+  color: var(--text-muted);
+  opacity: 0.4;
+}
+
+/* Contenido de texto de la tarjeta */
+.sim-card-body {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  flex: 1;
+}
+
+.sim-card-nombre {
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.sim-card-desc {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+.sim-card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: auto;
+  padding-top: 0.5rem;
+}
+
+.tag {
+  background-color: var(--bg);
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  font-size: 0.72rem;
+  padding: 0.15rem 0.55rem;
+  border-radius: 20px;
+}
+
+/* Responsive: 2 columnas en tablet, 1 en móvil */
+@media (max-width: 768px) {
+  .sims-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .sims-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+
+/* ─────────────────────────────────────────
+   PÁGINA INDIVIDUAL DE SIMULACIÓN
+───────────────────────────────────────── */
+.sim-main {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 2.5rem 2rem 4rem;
+  width: 100%;
+}
+
+/* Cabecera de la simulación */
+.sim-header {
+  margin-bottom: 2rem;
+}
+
+.btn-back {
+  display: inline-block;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+  transition: color 0.2s;
+}
+
+.btn-back:hover {
+  color: var(--text);
+  text-decoration: none;
+}
+
+.sim-meta {
+  margin-bottom: 0.5rem;
+}
+
+.sim-asignatura {
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--accent);
+}
+
+.sim-titulo {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 0.6rem;
+}
+
+.sim-descripcion {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  max-width: 640px;
+}
+
+/* Zona central: canvas a la izquierda, controles a la derecha */
+.sim-workspace {
+  display: grid;
+  grid-template-columns: 1fr 260px;
+  gap: 1.5rem;
+  margin-bottom: 3rem;
+  align-items: start;
+}
+
+/* Contenedor del canvas de p5.js */
+.canvas-container {
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  aspect-ratio: 4 / 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Aseguramos que el canvas de p5 ocupe todo el contenedor */
+.canvas-container canvas {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.canvas-placeholder {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+
+/* Panel de controles */
+.controles-panel {
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.controles-titulo {
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+}
+
+/* Cada control: label + slider */
+.control-grupo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.control-grupo label {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  display: flex;
+  justify-content: space-between;
+}
+
+.control-valor {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+/* Estilo del slider */
+input[type="range"] {
+  width: 100%;
+  accent-color: var(--accent);
+  cursor: pointer;
+}
+
+/* Botones del panel */
+.controles-botones {
+  display: flex;
+  gap: 0.6rem;
+  margin-top: 0.4rem;
+}
+
+.btn-control {
+  flex: 1;
+  padding: 0.5rem;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background-color: var(--bg);
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  font-family: var(--font);
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s;
+}
+
+.btn-control:hover {
+  border-color: var(--accent);
+  color: var(--text);
+}
+
+.btn-control-acento {
+  background-color: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+.btn-control-acento:hover {
+  opacity: 0.85;
+  color: #fff;
+}
+
+/* Sección de explicación física */
+.sim-explicacion {
+  max-width: 720px;
+  border-top: 1px solid var(--border);
+  padding-top: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.sim-explicacion h2 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 0.2rem;
+}
+
+.sim-explicacion p {
+  color: var(--text-muted);
+  font-size: 0.92rem;
+  line-height: 1.7;
+}
+
+.formula-bloque {
+  text-align: center;
+  padding: 0.5rem 0;
+}
+
+/* Responsive: en móvil el workspace se apila */
+@media (max-width: 700px) {
+  .sim-workspace {
+    grid-template-columns: 1fr;
+  }
+}

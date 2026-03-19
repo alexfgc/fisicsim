@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Catálogo — FISICSIM</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
+    rel="stylesheet"
+  />
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"
+  />
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+  <!-- CABECERA: idéntica a index.html -->
+  <header class="site-header">
+    <span class="logo">FISICSIM</span>
+    <nav>
+      <a href="index.html">Inicio</a>
+      <a href="catalogo.html">Catálogo</a>
+    </nav>
+  </header>
+
+  <main class="catalogo-main">
+    <div class="catalogo-header">
+      <h1>Catálogo de simulaciones</h1>
+      <p>Selecciona una simulación para visualizarla e interactuar con ella.</p>
+    </div>
+
+    <!-- 
+      Aquí se van a generar los grupos de asignaturas
+      con sus tarjetas. El JavaScript de abajo los
+      construye automáticamente leyendo SIMULACIONES.
+    -->
+    <div id="catalogo-contenido"></div>
+  </main>
+
+  <footer class="site-footer">
+    <p>FISICSIM · Grado en Física · UCLM</p>
+  </footer>
+
+  <!-- Cargamos el array central primero -->
+  <script src="simulaciones.js"></script>
+
+  <script>
+    // ─────────────────────────────────────────
+    // GENERACIÓN AUTOMÁTICA DEL CATÁLOGO
+    // ─────────────────────────────────────────
+
+    // 1. Extraemos todas las asignaturas únicas
+    //    que aparecen en el array, en orden de
+    //    aparición.
+    const asignaturas = [...new Set(SIMULACIONES.map(s => s.asignatura))];
+
+    const contenedor = document.getElementById("catalogo-contenido");
+
+    // 2. Por cada asignatura, creamos una sección
+    //    con su título y un grid de tarjetas.
+    asignaturas.forEach(asignatura => {
+
+      // Filtramos solo las sims de esta asignatura
+      const simsDeEstaAsignatura = SIMULACIONES.filter(
+        s => s.asignatura === asignatura
+      );
+
+      // Creamos el HTML de la sección
+      const seccion = document.createElement("section");
+      seccion.className = "catalogo-seccion";
+
+      seccion.innerHTML = `
+        <h2 class="seccion-titulo">${asignatura}</h2>
+        <div class="sims-grid">
+          ${simsDeEstaAsignatura.map(sim => `
+            <a href="sims/${sim.id}/index.html" class="sim-card">
+              <div class="sim-card-preview">
+                <span class="sim-preview-icon">⟳</span>
+              </div>
+              <div class="sim-card-body">
+                <h3 class="sim-card-nombre">${sim.nombre}</h3>
+                <p class="sim-card-desc">${sim.descripcion}</p>
+                <div class="sim-card-tags">
+                  ${sim.tags.map(tag => `<span class="tag">${tag}</span>`).join("")}
+                </div>
+              </div>
+            </a>
+          `).join("")}
+        </div>
+      `;
+
+      contenedor.appendChild(seccion);
+    });
+  </script>
+
+</body>
+</html>
