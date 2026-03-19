@@ -14,9 +14,9 @@
     rel="stylesheet"
     href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"
   />
-
   <link rel="stylesheet" href="style.css" />
 </head>
+
 <body>
 
   <!-- OVERLAY: fondo oscuro en móvil al abrir la barra -->
@@ -33,7 +33,7 @@
     <span>Áreas</span>
   </button>
 
-  <!-- CABECERA: idéntica a index.html -->
+  <!-- CABECERA -->
   <header class="site-header">
     <span class="logo">FISICSIM</span>
     <nav>
@@ -43,25 +43,33 @@
   </header>
 
   <main class="catalogo-main">
-    // 1. Extraemos todas las asignaturas únicas
-    //    que aparecen en el array, en orden de
-    //    aparición.
+    <div class="catalogo-header">
+      <h1>Catálogo de simulaciones</h1>
+      <p>Selecciona una simulación para visualizarla e interactuar con ella.</p>
+    </div>
+    <div id="catalogo-contenido"></div>
+  </main>
+
+  <footer class="site-footer">
+    <p>FISICSIM · Grado en Física · UCLM</p>
+  </footer>
+
+  <!-- SCRIPT 1: array central -->
+  <script src="simulaciones.js"></script>
+
+  <!-- SCRIPT 2: generación del catálogo -->
+  <script>
     const asignaturas = [...new Set(SIMULACIONES.map(s => s.asignatura))];
+    const contenedor  = document.getElementById("catalogo-contenido");
 
-    const contenedor = document.getElementById("catalogo-contenido");
-
-    // 2. Por cada asignatura, creamos una sección
-    //    con su título y un grid de tarjetas.
     asignaturas.forEach(asignatura => {
-
-      // Filtramos solo las sims de esta asignatura
       const simsDeEstaAsignatura = SIMULACIONES.filter(
         s => s.asignatura === asignatura
       );
 
-      // Creamos el HTML de la sección
       const seccion = document.createElement("section");
       seccion.className = "catalogo-seccion";
+      seccion.id = asignatura; // ← permite el scroll desde la portada
 
       seccion.innerHTML = `
         <h2 class="seccion-titulo">${asignatura}</h2>
@@ -86,76 +94,70 @@
       contenedor.appendChild(seccion);
     });
   </script>
- <script>
-  // ─────────────────────────────────────────
-  // BARRA LATERAL
-  // ─────────────────────────────────────────
 
-  const sidebar        = document.getElementById("sidebar");
-  const toggleBtn      = document.getElementById("sidebar-toggle");
-  const overlay        = document.getElementById("sidebar-overlay");
-  const sidebarLinks   = document.getElementById("sidebar-links");
+  <!-- SCRIPT 3: barra lateral -->
+  <script>
+    const sidebar      = document.getElementById("sidebar");
+    const toggleBtn    = document.getElementById("sidebar-toggle");
+    const overlay      = document.getElementById("sidebar-overlay");
+    const sidebarLinks = document.getElementById("sidebar-links");
 
-  // 1. Generamos un enlace por cada asignatura.
-  //    Al clicar, hace scroll hasta esa sección.
-  asignaturas.forEach(asignatura => {
+    asignaturas.forEach(asignatura => {
+      const btn = document.createElement("button");
+      btn.className = "sidebar-link";
+      btn.textContent = asignatura;
 
-    const btn = document.createElement("button");
-    btn.className = "sidebar-link";
-    btn.textContent = asignatura;
-
-    btn.addEventListener("click", () => {
-      // Buscamos el h2 que contiene el nombre
-      // de la asignatura y hacemos scroll hasta él.
-      const secciones = document.querySelectorAll(".seccion-titulo");
-      secciones.forEach(titulo => {
-        if (titulo.textContent === asignatura) {
-          titulo.scrollIntoView({ behavior: "smooth", block: "start" });
-        }
+      btn.addEventListener("click", () => {
+        const destino = document.getElementById(asignatura);
+        if (destino) destino.scrollIntoView({ behavior: "smooth", block: "start" });
+        if (window.innerWidth < 768) cerrarSidebar();
       });
 
-      // En móvil cerramos la barra al navegar.
-      if (window.innerWidth < 768) cerrarSidebar();
+      sidebarLinks.appendChild(btn);
     });
 
-    sidebarLinks.appendChild(btn);
-  });
+    function abrirSidebar() {
+      sidebar.classList.add("abierta");
+      toggleBtn.classList.add("desplazado");
+      overlay.classList.add("visible");
+    }
 
-  // 2. Lógica de abrir y cerrar.
-  function abrirSidebar() {
-    sidebar.classList.add("abierta");
-    toggleBtn.classList.add("desplazado");
-    overlay.classList.add("visible");
-  }
+    function cerrarSidebar() {
+      sidebar.classList.remove("abierta");
+      toggleBtn.classList.remove("desplazado");
+      overlay.classList.remove("visible");
+    }
 
-  function cerrarSidebar() {
-    sidebar.classList.remove("abierta");
-    toggleBtn.classList.remove("desplazado");
-    overlay.classList.remove("visible");
-  }
+    toggleBtn.addEventListener("click", () => {
+      sidebar.classList.contains("abierta") ? cerrarSidebar() : abrirSidebar();
+    });
 
-  toggleBtn.addEventListener("click", () => {
-    sidebar.classList.contains("abierta") ? cerrarSidebar() : abrirSidebar();
-  });
+    overlay.addEventListener("click", cerrarSidebar);
 
-  // Cerrar al clicar el fondo oscuro (móvil).
-  overlay.addEventListener("click", cerrarSidebar);
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const nombre = entry.target.textContent;
+          document.querySelectorAll(".sidebar-link").forEach(link => {
+            link.classList.toggle("activo", link.textContent === nombre);
+          });
+        }
+      });
+    }, { threshold: 0.8 });
 
-  // 3. Resaltamos la asignatura visible
-  //    mientras el usuario hace scroll.
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        const nombre = entry.target.textContent;
-        document.querySelectorAll(".sidebar-link").forEach(link => {
-          link.classList.toggle("activo", link.textContent === nombre);
-        });
+    document.querySelectorAll(".seccion-titulo").forEach(el => observer.observe(el));
+
+    // Scroll automático si la URL tiene un ancla
+    const ancla = decodeURIComponent(window.location.hash.slice(1));
+    if (ancla) {
+      const destino = document.getElementById(ancla);
+      if (destino) {
+        setTimeout(() => {
+          destino.scrollIntoView({ behavior: "smooth", block: "start" });
+        }, 100);
       }
-    });
-  }, { threshold: 0.8 });
+    }
+  </script>
 
-  // Observamos todos los títulos de sección.
-  document.querySelectorAll(".seccion-titulo").forEach(el => observer.observe(el));
-</script>
 </body>
 </html>
