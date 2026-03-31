@@ -59,7 +59,7 @@
 
   <!-- SCRIPT 2: generación del catálogo -->
   <script>
-    var asignaturas = [...new Set(SIMULACIONES.map(s => s.asignatura))];
+    var asignaturas = ASIGNATURAS;
     const contenedor = document.getElementById("catalogo-contenido");
 
     asignaturas.forEach(asignatura => {

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Órbitas y cónicas — FISICSIM</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"
+  />
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/p5@1.9.3/lib/p5.min.js"></script>
+  <link rel="stylesheet" href="../../style.css" />
+</head>
+
+<body>
+  <header class="site-header">
+    <a href="../../index.html" class="logo">FISICSIM</a>
+    <nav>
+      <a href="../../index.html">Inicio</a>
+      <a href="../../catalogo.html">Catálogo</a>
+    </nav>
+  </header>
+
+  <main class="sim-main">
+    <div class="sim-header">
+      <a href="../../catalogo.html" class="btn-back">← Volver al catálogo</a>
+      <div class="sim-meta">
+        <span class="sim-asignatura">Mecánica y Ondas 1</span>
+      </div>
+      <h1 class="sim-titulo">Ecuación de la órbita (caso newtoniano) y cónicas</h1>
+      <p class="sim-descripcion">
+        Explora las órbitas en un potencial gravitatorio \(U(r)\\propto -1/r\) usando la
+        ecuación polar de las cónicas. Ajusta la excentricidad \(e\) y el semilatus rectum \(p\).
+      </p>
+    </div>
+
+    <div class="sim-workspace">
+      <div id="canvas-container" class="canvas-container">
+        <p class="canvas-placeholder">Cargando simulación…</p>
+      </div>
+
+      <div class="controles-panel">
+        <h2 class="controles-titulo">Parámetros</h2>
+
+        <div class="control-grupo">
+          <label for="slider-e">
+            Excentricidad \(e\) <span class="control-valor" id="val-e">0.50</span>
+          </label>
+          <input type="range" id="slider-e" min="0.00" max="2.00" step="0.01" value="0.50" />
+        </div>
+
+        <div class="control-grupo">
+          <label for="slider-p">
+            Semilatus rectum \(p\) <span class="control-valor" id="val-p">1.00</span>
+          </label>
+          <input type="range" id="slider-p" min="0.40" max="2.50" step="0.02" value="1.00" />
+        </div>
+
+        <div class="control-grupo">
+          <label for="slider-phi0">
+            Rotación \(\\varphi_0\) <span class="control-valor" id="val-phi0">0</span>°
+          </label>
+          <input type="range" id="slider-phi0" min="-180" max="180" step="1" value="0" />
+        </div>
+
+        <div class="controles-botones">
+          <button id="btn-reiniciar" class="btn-control">Reiniciar</button>
+          <button id="btn-pausa" class="btn-control btn-control-acento">Pausar</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="sim-explicacion">
+      <h2>Modelo físico</h2>
+      <p>
+        En el problema de Kepler (potencial newtoniano \(U(r)\\propto -1/r\)), la órbita
+        es una cónica con un foco en el centro de fuerzas. En coordenadas polares:
+      </p>
+      <p class="formula-bloque">
+        $$ r(\\theta)=\\frac{p}{1+e\\cos\\theta} $$
+      </p>
+      <p>
+        Con \(0\\le e&lt;1\) (elipse), \(e=1\) (parábola) y \(e&gt;1\) (hipérbola).
+        Esta simulación dibuja la curva en polares y la convierte a cartesianas
+        \(x=r\\cos\\theta,\\; y=r\\sin\\theta\\).
+      </p>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <p>FISICSIM · Grado en Física · UCLM</p>
+  </footer>
+
+  <script src="sketch.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      renderMathInElement(document.body, {
+        delimiters: [
+          { left: "$$", right: "$$", display: true },
+          { left: "\\(", right: "\\)", display: false }
+        ]
+      });
+    });
+  </script>
+</body>
+</html>

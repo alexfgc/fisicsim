@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Principio de Bernoulli — FISICSIM</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"
+  />
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/p5@1.9.3/lib/p5.min.js"></script>
+
+  <link rel="stylesheet" href="../../style.css" />
+</head>
+<body>
+
+  <header class="site-header">
+    <a href="../../index.html" class="logo">FISICSIM</a>
+    <nav>
+      <a href="../../index.html">Inicio</a>
+      <a href="../../catalogo.html">Catálogo</a>
+    </nav>
+  </header>
+
+  <main class="sim-main">
+    <div class="sim-header">
+      <a href="../../catalogo.html" class="btn-back">← Volver al catálogo</a>
+      <div class="sim-meta">
+        <span class="sim-asignatura">Física de Fluidos</span>
+      </div>
+      <h1 class="sim-titulo">Principio de Bernoulli</h1>
+      <p class="sim-descripcion">
+        Flujo ideal en un tubo de Venturi horizontal. Modifica velocidad de entrada,
+        estrechamiento, densidad y presión inicial para observar cómo cambian la
+        velocidad y la presión estática entre la sección ancha y la garganta.
+      </p>
+    </div>
+
+    <div class="sim-workspace">
+      <div id="canvas-container" class="canvas-container">
+        <p class="canvas-placeholder">Cargando simulación…</p>
+      </div>
+
+      <div class="controles-panel">
+        <h2 class="controles-titulo">Parámetros</h2>
+
+        <div class="control-grupo">
+          <label for="slider-v1">
+            Velocidad entrada <span class="control-valor" id="val-v1">2.0</span> m/s
+          </label>
+          <input type="range" id="slider-v1" min="0.5" max="8.0" step="0.1" value="2.0" />
+        </div>
+
+        <div class="control-grupo">
+          <label for="slider-ratio">
+            Relación de áreas A2/A1 <span class="control-valor" id="val-ratio">0.50</span>
+          </label>
+          <input type="range" id="slider-ratio" min="0.25" max="1.00" step="0.01" value="0.50" />
+        </div>
+
+        <div class="control-grupo">
+          <label for="slider-rho">
+            Densidad del fluido <span class="control-valor" id="val-rho">1000</span> kg/m³
+          </label>
+          <input type="range" id="slider-rho" min="200" max="1400" step="10" value="1000" />
+        </div>
+
+        <div class="control-grupo">
+          <label for="slider-p1">
+            Presión en sección 1 <span class="control-valor" id="val-p1">120</span> kPa
+          </label>
+          <input type="range" id="slider-p1" min="80" max="250" step="1" value="120" />
+        </div>
+
+        <div class="controles-botones">
+          <button id="btn-reiniciar" class="btn-control">Reiniciar</button>
+          <button id="btn-pausa" class="btn-control btn-control-acento">Pausar</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="sim-explicacion">
+      <h2>Modelo físico</h2>
+      <p>
+        Para un flujo ideal, incompresible y estacionario en un conducto horizontal
+        se cumple la ecuación de Bernoulli:
+      </p>
+      <p class="formula-bloque">
+        $$ p + \frac{1}{2}\rho v^2 = \text{cte} $$
+      </p>
+      <p>
+        Entre dos secciones del tubo (1: ancha, 2: garganta), y usando continuidad
+        \(A_1 v_1 = A_2 v_2\):
+      </p>
+      <p class="formula-bloque">
+        $$ v_2 = v_1\frac{A_1}{A_2}, \qquad
+           p_2 = p_1 + \frac{1}{2}\rho\left(v_1^2 - v_2^2\right) $$
+      </p>
+      <p>
+        Cuando el área disminuye, la velocidad aumenta y la presión estática baja.
+        Esta versión ignora pérdidas por viscosidad y diferencia de altura.
+      </p>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <p>FISICSIM · Grado en Física · UCLM</p>
+  </footer>
+
+  <script src="sketch.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      renderMathInElement(document.body, {
+        delimiters: [
+          { left: "$$", right: "$$", display: true },
+          { left: "\\(", right: "\\)", display: false }
+        ]
+      });
+    });
+  </script>
+</body>
+</html>

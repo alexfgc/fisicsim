@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Potencial efectivo — FISICSIM</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"
+  />
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/p5@1.9.3/lib/p5.min.js"></script>
+  <link rel="stylesheet" href="../../style.css" />
+</head>
+
+<body>
+  <header class="site-header">
+    <a href="../../index.html" class="logo">FISICSIM</a>
+    <nav>
+      <a href="../../index.html">Inicio</a>
+      <a href="../../catalogo.html">Catálogo</a>
+    </nav>
+  </header>
+
+  <main class="sim-main">
+    <div class="sim-header">
+      <a href="../../catalogo.html" class="btn-back">← Volver al catálogo</a>
+      <div class="sim-meta">
+        <span class="sim-asignatura">Mecánica y Ondas 1</span>
+      </div>
+      <h1 class="sim-titulo">Fuerza central y potencial efectivo</h1>
+      <p class="sim-descripcion">
+        Visualiza el potencial efectivo \(U_{\\mathrm{eff}}(r)\) para una fuerza central.
+        Ajusta el momento angular y el tipo de potencial (newtoniano) para entender
+        el gradiente radial, órbitas ligadas y no ligadas.
+      </p>
+    </div>
+
+    <div class="sim-workspace">
+      <div id="canvas-container" class="canvas-container">
+        <p class="canvas-placeholder">Cargando simulación…</p>
+      </div>
+
+      <div class="controles-panel">
+        <h2 class="controles-titulo">Parámetros</h2>
+
+        <div class="control-grupo">
+          <label for="slider-mu">
+            Parámetro gravitatorio \(\mu\) <span class="control-valor" id="val-mu">1.00</span>
+          </label>
+          <input type="range" id="slider-mu" min="0.20" max="3.00" step="0.05" value="1.00" />
+        </div>
+
+        <div class="control-grupo">
+          <label for="slider-L">
+            Momento angular \(L\) <span class="control-valor" id="val-L">1.00</span>
+          </label>
+          <input type="range" id="slider-L" min="0.20" max="3.00" step="0.05" value="1.00" />
+        </div>
+
+        <div class="control-grupo">
+          <label for="slider-E">
+            Energía \(E\) <span class="control-valor" id="val-E">-0.20</span>
+          </label>
+          <input type="range" id="slider-E" min="-1.00" max="1.00" step="0.02" value="-0.20" />
+        </div>
+
+        <div class="controles-botones">
+          <button id="btn-reiniciar" class="btn-control">Reiniciar</button>
+          <button id="btn-pausa" class="btn-control btn-control-acento">Pausar</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="sim-explicacion">
+      <h2>Modelo físico</h2>
+      <p>
+        En una fuerza central \(\\mathbf{F}(r)=F(r)\\,\\hat{\\mathbf{r}}\\) el momento angular
+        \(L = m r^2 \\dot{\\theta}\) se conserva. La dinámica radial puede escribirse con un
+        potencial efectivo:
+      </p>
+      <p class="formula-bloque">
+        $$ U_{\\mathrm{eff}}(r) = U(r) + \\frac{L^2}{2 m r^2} $$
+      </p>
+      <p>
+        Para el caso newtoniano \(U(r)=-\\mu m/r\\) (con \(\\mu=GM\\)), el término
+        \(L^2/(2mr^2)\) actúa como una barrera centrífuga. Los puntos de retorno radial
+        satisfacen \(E = U_{\\mathrm{eff}}(r)\\).
+      </p>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <p>FISICSIM · Grado en Física · UCLM</p>
+  </footer>
+
+  <script src="sketch.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      renderMathInElement(document.body, {
+        delimiters: [
+          { left: "$$", right: "$$", display: true },
+          { left: "\\(", right: "\\)", display: false }
+        ]
+      });
+    });
+  </script>
+</body>
+</html>
