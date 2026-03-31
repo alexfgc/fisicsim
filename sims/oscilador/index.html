@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Oscilador Armónico Simple — FISICSIM</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"
+  />
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/p5@1.9.3/lib/p5.min.js"></script>
+
+  <link rel="stylesheet" href="../../style.css" />
+</head>
+
+<body>
+
+  <header class="site-header">
+    <a href="../../index.html" class="logo">FISICSIM</a>
+    <nav>
+      <a href="../../index.html">Inicio</a>
+      <a href="../../catalogo.html">Catálogo</a>
+    </nav>
+  </header>
+
+  <main class="sim-main">
+
+    <div class="sim-header">
+      <a href="../../catalogo.html" class="btn-back">← Volver al catálogo</a>
+      <div class="sim-meta">
+        <span class="sim-asignatura">Mecánica y Ondas</span>
+      </div>
+      <h1 class="sim-titulo">Oscilador armónico simple</h1>
+      <p class="sim-descripcion">
+        Masa unida a un muelle ideal. Ajusta la masa, la constante elástica y la
+        amplitud inicial; observa la energía cinética y potencial y la gráfica
+        de la posición en función del tiempo.
+      </p>
+    </div>
+
+    <div class="sim-workspace">
+
+      <div id="canvas-container" class="canvas-container">
+        <p class="canvas-placeholder">Cargando simulación…</p>
+      </div>
+
+      <div class="controles-panel">
+        <h2 class="controles-titulo">Parámetros</h2>
+
+        <div class="control-grupo">
+          <label for="slider-masa">
+            Masa <span class="control-valor" id="val-masa">1.0</span> kg
+          </label>
+          <input
+            type="range"
+            id="slider-masa"
+            min="0.2" max="5.0" step="0.1" value="1.0"
+          />
+        </div>
+
+        <div class="control-grupo">
+          <label for="slider-k">
+            Constante del muelle <span class="control-valor" id="val-k">20</span> N/m
+          </label>
+          <input
+            type="range"
+            id="slider-k"
+            min="2" max="80" step="1" value="20"
+          />
+        </div>
+
+        <div class="control-grupo">
+          <label for="slider-amplitud">
+            Amplitud inicial <span class="control-valor" id="val-amplitud">0.15</span> m
+          </label>
+          <input
+            type="range"
+            id="slider-amplitud"
+            min="0.05" max="0.40" step="0.01" value="0.15"
+          />
+        </div>
+
+        <div class="controles-botones">
+          <button id="btn-reiniciar" class="btn-control">Reiniciar</button>
+          <button id="btn-pausa" class="btn-control btn-control-acento">Pausar</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="sim-explicacion">
+      <h2>Modelo físico</h2>
+
+      <p>
+        Un oscilador armónico simple describe el movimiento de una masa \( m \)
+        sometida a una fuerza restauradora proporcional al desplazamiento
+        \( x \) respecto del equilibrio: \( F = -k x \), donde \( k \) es la
+        constante elástica del muelle.
+      </p>
+
+      <p>
+        La ecuación del movimiento es:
+      </p>
+
+      <p class="formula-bloque">
+        $$ \ddot{x} = -\frac{k}{m}\, x $$
+      </p>
+
+      <p>
+        La pulsación es \( \omega_0 = \sqrt{k/m} \) y el periodo
+        \( T = 2\pi/\omega_0 = 2\pi\sqrt{m/k} \). Las energías cinética y
+        potencial elástica son
+        \( E_c = \tfrac{1}{2} m \dot{x}^2 \) y
+        \( E_p = \tfrac{1}{2} k x^2 \); su suma se conserva en el modelo ideal
+        sin rozamiento.
+      </p>
+    </div>
+
+  </main>
+
+  <footer class="site-footer">
+    <p>FISICSIM · Grado en Física · UCLM</p>
+  </footer>
+
+  <script src="sketch.js"></script>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      renderMathInElement(document.body, {
+        delimiters: [
+          { left: "$$", right: "$$", display: true },
+          { left: "\\(", right: "\\)", display: false }
+        ]
+      });
+    });
+  </script>
+
+</body>
+</html>
