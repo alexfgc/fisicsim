@@ -1,0 +1,138 @@
+# FISICSIM — Reglas para el agente
+
+## Quién soy
+Alejandro, estudiante de 2º del Grado en Física (UCLM, España).
+Sin experiencia previa en desarrollo web. Explica siempre qué hace cada bloque de código.
+Trabaja en fases, no des todo el código de golpe. Instrucciones concretas paso a paso.
+
+## Qué es este proyecto
+Web estática de simulaciones interactivas de física para estudiantes universitarios.
+Desplegada en GitHub Pages: https://alexfgc.github.io/fisicsim
+
+## Stack tecnológico — NO salirse de esto
+- HTML + CSS + JavaScript vanilla (sin frameworks)
+- p5.js en MODO INSTANCIA para todas las simulaciones
+- KaTeX para fórmulas matemáticas
+- Fuente: Inter (Google Fonts)
+- Sin backend, sin servidor, sin npm, sin bundlers
+
+## Estructura de archivos
+```
+fisicsim/
+├── index.html          ← Portada
+├── catalogo.html       ← Catálogo dinámico (generado desde simulaciones.js)
+├── style.css           ← Estilos globales
+├── simulaciones.js     ← Array central SIMULACIONES[]
+└── sims/
+    └── pendulo/
+        ├── index.html  ← Página individual de simulación
+        └── sketch.js   ← Código p5.js de la simulación
+```
+
+## Paleta de colores — usar siempre estas variables CSS
+```
+--bg:         #0f1117   (fondo general)
+--surface:    #1a1d27   (tarjetas, header, paneles)
+--accent:     #5b8dee   (azul: botones, enlaces activos)
+--text:       #e8eaf0   (texto principal)
+--text-muted: #8b8fa8   (texto secundario)
+--border:     #2a2d3e   (bordes y separadores)
+--font:       'Inter', sans-serif
+--radius:     10px
+```
+En p5.js usar equivalentes RGB: fondo `p.background(26, 29, 39)`, acento `p.color(91, 141, 238)`.
+
+## Plantilla obligatoria de sketch.js
+Toda simulación nueva DEBE usar esta estructura exacta:
+```javascript
+new p5(function(p) {
+  p.setup = function() {
+    const contenedor = document.getElementById("canvas-container");
+    const canvas = p.createCanvas(contenedor.offsetWidth, contenedor.offsetHeight);
+    canvas.parent("canvas-container");
+    const placeholder = contenedor.querySelector(".canvas-placeholder");
+    if (placeholder) placeholder.remove();
+    // Conectar sliders y botones del HTML aquí
+  };
+
+  p.draw = function() {
+    p.background(26, 29, 39); // --surface
+    // Lógica de física y dibujo aquí
+  };
+
+  p.windowResized = function() {
+    const contenedor = document.getElementById("canvas-container");
+    p.resizeCanvas(contenedor.offsetWidth, contenedor.offsetHeight);
+  };
+}, "canvas-container");
+```
+
+## IDs HTML que sketch.js debe usar (obligatorio)
+- `canvas-container`  → donde p5 inyecta el canvas
+- `slider-X`          → sliders de parámetros
+- `val-X`             → spans que muestran el valor del slider
+- `btn-reiniciar`     → reinicia la simulación
+- `btn-pausa`         → pausa/reanuda
+
+## Rutas relativas desde sims/nombre-sim/
+- CSS global:  `../../style.css`
+- Volver:      `../../catalogo.html`
+- Logo:        `../../index.html`
+
+## CDNs obligatorios en el <head> de cada simulación
+```html
+<!-- Inter -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<!-- KaTeX -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<!-- p5.js -->
+<script src="https://cdn.jsdelivr.net/npm/p5@1.9.3/lib/p5.min.js"></script>
+```
+
+## Cómo añadir una simulación nueva
+1. Crear carpeta `sims/nombre-sim/`
+2. Crear `sims/nombre-sim/index.html` (copiar plantilla de `sims/pendulo/index.html`)
+3. Crear `sims/nombre-sim/sketch.js` (p5.js en modo instancia)
+4. Añadir entrada en `simulaciones.js`:
+```javascript
+{
+  id: "nombre-sim",
+  nombre: "Nombre visible",
+  asignatura: "Mecánica Clásica", // valor exacto de la lista de categorías
+  descripcion: "Descripción corta.",
+  tags: ["tag1", "tag2"]
+}
+```
+5. `git add . && git commit -m "msg" && git push`
+
+## Categorías de asignaturas (valores EXACTOS, no inventar otros)
+- "Mecánica Clásica"
+- "Mecánica y Ondas"
+- "Termodinámica"
+- "Física Cuántica"
+- "Electromagnetismo"
+- "Métodos Matemáticos"
+
+## Clases CSS ya definidas en style.css
+No crear estilos nuevos si ya existe una clase para eso:
+- `.site-header`       navegación fija sticky
+- `.btn-primary`       botón azul con hover
+- `.sim-workspace`     layout canvas + controles (grid 1fr 260px)
+- `.canvas-container`  contenedor del canvas, aspect-ratio 4/3
+- `.controles-panel`   panel lateral de sliders
+- `.sim-explicacion`   sección de explicación física
+- `.sims-grid`         grid 3 columnas de tarjetas
+- `.sim-card`          tarjeta de simulación con hover
+
+## Flujo de trabajo
+- Desarrollo local: Live Server en VS Code
+- Publicación: `git add . && git commit -m "msg" && git push`
+- GitHub Pages se actualiza en 1-2 minutos tras el push
+
+## Reglas de código
+- Comentar cada bloque de código explicando qué hace y por qué
+- Preferir claridad sobre brevedad
+- No usar librerías externas que no estén ya en el proyecto
+- Si algo puede romperse en GitHub Pages (rutas absolutas, etc.), avisarlo
