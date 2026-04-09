@@ -21,6 +21,15 @@ const SIMULACIONES = [
   },
 
   {
+    id: "coriolis",
+    nombre: "Fuerzas Ficticias (Coriolis)",
+    asignatura: "Mecánica y Ondas 1",
+    descripcion:
+      "Partícula sobre un disco en rotación: compara la trayectoria inercial y la vista desde el sistema rotante.",
+    tags: ["coriolis", "rotación", "marcos"]
+  },
+
+  {
     id: "potencial-efectivo",
     nombre: "Fuerza central: potencial efectivo",
     asignatura: "Mecánica y Ondas 1",

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fuerzas Ficticias (Coriolis) — FISICSIM</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"
+  />
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/p5@1.9.3/lib/p5.min.js"></script>
+
+  <link rel="stylesheet" href="../../style.css" />
+</head>
+
+<body>
+
+  <header class="site-header">
+    <a href="../../index.html" class="logo">FISICSIM</a>
+    <nav>
+      <a href="../../index.html">Inicio</a>
+      <a href="../../catalogo.html">Catálogo</a>
+    </nav>
+  </header>
+
+  <main class="sim-main">
+
+    <div class="sim-header">
+      <a href="../../catalogo.html" class="btn-back">← Volver al catálogo</a>
+      <div class="sim-meta">
+        <span class="sim-asignatura">Mecánica y Ondas 1</span>
+      </div>
+      <h1 class="sim-titulo">Fuerzas Ficticias (Coriolis)</h1>
+      <p class="sim-descripcion">
+        Partícula sobre un disco en rotación: trayectoria inercial (recta en el laboratorio)
+        y trayectoria aparente en el marco que gira con el disco.
+      </p>
+    </div>
+
+    <div class="sim-workspace">
+
+      <div id="canvas-container" class="canvas-container">
+        <p class="canvas-placeholder">Cargando simulación…</p>
+      </div>
+
+      <div class="controles-panel">
+        <h2 class="controles-titulo">Parámetros</h2>
+
+        <div class="control-grupo">
+          <label for="slider-omega">
+            Velocidad angular \(\Omega\)
+            <span class="control-valor" id="val-omega">0.0200</span> rad/frame
+          </label>
+          <input
+            type="range"
+            id="slider-omega"
+            min="-0.05" max="0.05" step="0.001" value="0.02"
+          />
+        </div>
+
+        <div class="control-grupo">
+          <label for="slider-v0">
+            Velocidad inicial \(v_0\)
+            <span class="control-valor" id="val-v0">0.50</span> px/frame
+          </label>
+          <input
+            type="range"
+            id="slider-v0"
+            min="0.1" max="2.0" step="0.05" value="0.5"
+          />
+        </div>
+
+        <div class="controles-botones">
+          <button id="btn-reiniciar" class="btn-control">Reiniciar</button>
+          <button id="btn-pausa" class="btn-control btn-control-acento">Pausar</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="sim-explicacion">
+      <h2>Modelo físico</h2>
+
+      <p>
+        En un sistema de referencia que rota con velocidad angular
+        \( \vec{\Omega} \) respecto al espacio inercial, una partícula de masa \( m \)
+        sometida solo a fuerzas reales nulas sigue, en el marco rotante, una aceleración
+        aparente debida a las fuerzas ficticias de Coriolis y centrífuga.
+      </p>
+
+      <p>
+        La aceleración en el sistema rotante es
+      </p>
+
+      <p class="formula-bloque">
+        $$ \vec{a}_{\mathrm{rot}} = -2\,\vec{\Omega} \times \vec{v}_{\mathrm{rot}}
+        - \vec{\Omega} \times \bigl(\vec{\Omega} \times \vec{r}\bigr) $$
+      </p>
+
+      <p>
+        El término \( -2\,\vec{\Omega} \times \vec{v}_{\mathrm{rot}} \) es la
+        <strong>aceleración de Coriolis</strong>; el término
+        \( -\vec{\Omega} \times (\vec{\Omega} \times \vec{r}) \) corresponde a la
+        <strong>aceleración centrífuga</strong>. En el plano del disco
+        (\( \vec{\Omega} \) perpendicular al plano), la trayectoria inercial es recta
+        (vista fija al laboratorio), mientras que en el marco que gira con el disco la
+        trayectoria aparece curvada por estas aceleraciones ficticias.
+      </p>
+    </div>
+
+  </main>
+
+  <footer class="site-footer">
+    <p>FISICSIM · Grado en Física · UCLM</p>
+  </footer>
+
+  <script src="sketch.js"></script>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      renderMathInElement(document.body, {
+        delimiters: [
+          { left: "$$", right: "$$", display: true },
+          { left: "\\(", right: "\\)", display: false }
+        ]
+      });
+    });
+  </script>
+
+</body>
+</html>
