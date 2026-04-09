@@ -265,6 +265,27 @@ a:hover {
   border-bottom: 1px solid var(--border);
 }
 
+.catalogo-subseccion {
+  margin: 0 0 1.2rem;
+  padding: 0.9rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background-color: rgba(255, 255, 255, 0.02);
+}
+
+.subseccion-titulo {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 0.35rem;
+}
+
+.subseccion-nota {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
 /* Grid de tarjetas: 3 columnas en escritorio */
 .sims-grid {
   display: grid;

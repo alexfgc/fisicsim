@@ -60,6 +60,14 @@
   <!-- SCRIPT 2: generación del catálogo -->
   <script>
     var asignaturas = ASIGNATURAS;
+    const subsecciones = {
+      "Mecánica y Ondas 2": [
+        {
+          titulo: "Relatividad",
+          descripcion: "Sección reservada para simulaciones de relatividad especial y general."
+        }
+      ]
+    };
     const contenedor = document.getElementById("catalogo-contenido");
 
     asignaturas.forEach(asignatura => {
@@ -67,12 +75,20 @@
         s => s.asignatura === asignatura
       );
 
+      const subseccionesDeEstaAsignatura = subsecciones[asignatura] || [];
+
       const seccion = document.createElement("section");
       seccion.className = "catalogo-seccion";
       seccion.id = asignatura;
 
       seccion.innerHTML = `
         <h2 class="seccion-titulo">${asignatura}</h2>
+        ${subseccionesDeEstaAsignatura.map(subseccion => `
+          <div class="catalogo-subseccion">
+            <h3 class="subseccion-titulo">${subseccion.titulo}</h3>
+            <p class="subseccion-nota">${subseccion.descripcion}</p>
+          </div>
+        `).join("")}
         <div class="sims-grid">
           ${simsDeEstaAsignatura.map(sim => `
             <a href="sims/${sim.id}/index.html" class="sim-card">
